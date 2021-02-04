@@ -25,6 +25,7 @@ export default {
   },
   created() {
     this.showBack = this.$route.path !== "/home";
+    this.checkLogin();
     console.log(this.$route);
     console.log(this.$router);
   },
@@ -36,6 +37,18 @@ export default {
   methods: {
     goBack() {
       this.$router.go(-1);
+    },
+    checkLogin() {
+      this.$indicator.open({
+        text: "加载中"
+      });
+      this.$http.post("/user").then(res => {
+        // console.log(res.config.headers);
+        if (res.data.code === 1) {
+          this.$store.commit("user/setUser", res.data.data);
+        }
+        this.$indicator.close();
+      });
     }
   }
 };

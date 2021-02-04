@@ -1,9 +1,8 @@
 <template>
-  <div class="member">
-    <div class="header-con">
-      <router-link :to="{ name: 'login' }" class="mui-navigate-right">
+  <div v-if="isLogin">
+    <div class="member">
+      <div class="header-con">
         <div class="user-info">
-          <!-- 用户信息 -->
           <div class="avatar-con">
             <div class="avatar">
               <img
@@ -13,13 +12,84 @@
             </div>
           </div>
           <div class="person-con">
-            <span>登录 / 注册</span>
+            <span>{{ username }}</span>
           </div>
         </div>
-      </router-link>
+      </div>
+    </div>
+    <ul class="mui-table-view mui-table-view-chevron">
+      <li class="mui-table-view-cell mui-media">
+        <router-link :to="{ name: 'order_list' }" class="mui-navigate-right">
+          <img
+            class="mui-media-object mui-pull-left"
+            src="../assets/images/avatar_default.png"
+          />
+          <div class="mui-media-body">我的订单</div>
+        </router-link>
+      </li>
+      <li class="mui-table-view-cell mui-media">
+        <router-link :to="{ name: 'address' }" class="mui-navigate-right">
+          <img
+            class="mui-media-object mui-pull-left"
+            src="../assets/images/avatar_default.png"
+          />
+          <div class="mui-media-body">收货地址</div>
+        </router-link>
+      </li>
+      <li class="mui-table-view-cell mui-media">
+        <div @click="logout" class="mui-navigate-right">
+          <img
+            class="mui-media-object mui-pull-left"
+            src="../assets/images/avatar_default.png"
+          />
+          <div class="mui-media-body">退出登录</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div v-else>
+    <div class="member">
+      <div class="header-con">
+        <router-link :to="{ name: 'login' }" class="mui-navigate-right">
+          <div class="user-info">
+            <!-- 用户信息 -->
+            <div class="avatar-con">
+              <div class="avatar">
+                <img
+                  src="../assets/images/avatar_default.png"
+                  class="image-info"
+                />
+              </div>
+            </div>
+            <div class="person-con">
+              <span>登陆 / 注册</span>
+            </div>
+          </div>
+        </router-link>
+      </div>
     </div>
   </div>
 </template>
+
+<script>
+import { mapGetters, mapState } from "vuex";
+
+export default {
+  computed: {
+    ...mapState({
+      username: state => state.user.username
+    }),
+    ...mapGetters("user", { isLogin: "isLogin" })
+  },
+  methods: {
+    logout() {
+      this.$store.commit("user/logout");
+      this.$auth.setAuthorization("");
+      this.$toast("退出成功");
+    }
+  }
+};
+</script>
 
 <style lang="scss" scoped>
 .mui-table-view .mui-media,
@@ -68,5 +138,9 @@
       }
     }
   }
+}
+.mui-navigate-right:after,
+.mui-push-right:after {
+  content: "";
 }
 </style>

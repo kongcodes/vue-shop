@@ -54,18 +54,26 @@ export default {
       if (this.loginForm.username === "" || this.loginForm.password === "") {
         this.$toast("账号或密码不能为空");
       } else {
+        this.$indicator.open({
+          text: "登陆中"
+        });
         this.$http
           .post("/login", this.loginForm)
           .then(res => {
-            if (res.data) {
-              // this.$toast(res.data.msg);
+            if (res.data.status) {
+              this.$store.commit("user/setUser", this.loginForm);
+              this.$auth.setAuthorization(res.data.session_id);
               this.$toast("登陆成功");
+              this.$router.replace({ name: "user" });
+              // console.log(this.$store.state);
             } else {
               this.$toast("登陆失败");
             }
+            this.$indicator.close();
           })
           .catch(() => {
             this.$toast("登录失败");
+            this.$indicator.close();
           });
       }
     },

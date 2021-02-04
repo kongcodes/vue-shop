@@ -3,6 +3,10 @@ import App from './App.vue'
 import router from './router.js'
 import store from './store'
 
+// auth.js文件一定要放在axios前面
+import auth from './auth.js'
+Vue.use(auth)
+
 import axios from './axios.js'
 Vue.use(axios)
 
