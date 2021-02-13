@@ -3,10 +3,12 @@ import user from "./user/api-user.js";
 import category from "./category/api-menus.js";
 import goodslist from "./category/api-goodslist.js";
 import goodsinfo from "./category/api-goodsinfo.js";
+import shopcart from "./category/api-shopcart.js";
 export default {
   login,
   user,
   category,
   goodslist,
-  goodsinfo
+  goodsinfo,
+  shopcart
 };

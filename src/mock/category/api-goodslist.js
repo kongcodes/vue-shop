@@ -9,7 +9,6 @@ let baseURL = "http://vshop.test";
 let postData = req => {
   let reqdata = JSON.parse(req.body);
   reqdata = reqdata.params;
-  console.log("--------参数", reqdata);
   return Mock.mock({
     code: 1,
     "data|10": [
@@ -20,7 +19,7 @@ let postData = req => {
         delete_time: null,
         goods_category_id: 2,
         id: 100,
-        image: Random.image("100x100"),
+        image: Random.image("100x100", "#50B347", "#FFF", "hello"),
         "name|+1": Random.natural(1, 100),
         "num|0-30": 0,
         "price|1000-4000": 1,

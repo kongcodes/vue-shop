@@ -5,15 +5,15 @@
         :to="{
           name: 'goods_info',
           params: {
-            id: index,
-            goodname: item.name,
+            id: index + 1,
+            goodname: index + 1,
             goodprice: item.price,
             goodnum: item.num
           }
         }"
       >
         <img :src="item.image" />
-        <h1 class="title">商品{{ item.name }}</h1>
+        <h1 class="title">商品{{ index + 1 }}</h1>
         <p class="info">
           <span class="price">¥{{ item.price }}</span>
           <span class="sell">剩余 {{ item.num }} 件</span>
@@ -51,7 +51,7 @@ export default {
       let params = { pagenum: this.pagenum, category_id: this.category_id };
       this.$http.post("/goodslist", { params: params }).then(res => {
         this.$indicator.close();
-        console.log(res);
+        // console.log(res);
         if (res.data.code === 1) {
           if (res.data.data.length > 0) {
             this.goodslist = this.goodslist.concat(res.data.data);
